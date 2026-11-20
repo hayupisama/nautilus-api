@@ -1,18 +1,15 @@
 # nautilus-api
 
-API du projet Nautilus (nom de code) : réservation de VTC dédiée aux PMR.
+API Quarkus (hexagonale par module) du projet Nautilus. Voir `CLAUDE.md` pour l'architecture.
 
-- Quarkus, Java 21, Maven
-- PostgreSQL + PostGIS, Flyway
-- Keycloak (OIDC), WebSockets Next pour le suivi en temps réel
-- Contrat : [nautilus-contrat-api](https://github.com/hayupisama/nautilus-contrat-api)
+## Prerequis
 
-## Démarrer (une fois le squelette généré)
+JDK 21 et Docker (Dev Services : PostgreSQL/PostGIS et Keycloak jetables).
 
-```bash
-./mvnw quarkus:dev   # Dev Services démarre PostgreSQL et Keycloak en conteneurs
-```
+## Commandes
 
-## Licence
+- `./mvnw quarkus:dev` : mode dev (Flyway applique les migrations au demarrage).
+- `./mvnw verify` : tests (dont tests d'architecture ArchUnit) et build JVM.
+- `./mvnw verify -Dnative -Dquarkus.native.container-build=true` : build natif.
 
-[PolyForm Noncommercial 1.0.0](LICENSE)
+Licence : PolyForm Noncommercial 1.0.0.
