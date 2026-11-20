@@ -6,14 +6,7 @@ API unique du projet : comptes, profils de besoins, chauffeurs et véhicules, re
 
 ## État
 
-Dépôt vide. Première tâche : générer le squelette.
-
-```bash
-quarkus create app fr.nautilus:nautilus-api --java=21 --maven \
-  --extension=rest-jackson,hibernate-orm-panache,jdbc-postgresql,flyway,oidc,websockets-next,scheduler,smallrye-health,micrometer-registry-prometheus,smallrye-openapi,hibernate-validator
-```
-
-Vérifier ensuite le support de Hibernate Spatial (PostGIS) pour la version de Quarkus utilisée et l'ajouter.
+Squelette Quarkus 3.40 (Java 21) en place (US U08) : extensions du projet, Flyway (migration PostGIS), `hibernate-spatial` (pas d'extension Quarkus : à valider en natif avec la première entité `geography`), interfaces JAX-RS générées depuis le contrat v0.2.0 (copie dans `src/main/openapi/`, sha256 dans `CONTRACT_VERSION`, mise à jour par `scripts/sync-contract.sh <tag>`), préfixe REST `/v1`, arborescence hexagonale des 8 modules + `shared`, tests ArchUnit, CI GitHub Actions (JVM sur PR, natif sur `main` ou `workflow_dispatch`). Aucun cas d'usage métier pour l'instant.
 
 ## Architecture : hexagonale par module
 
