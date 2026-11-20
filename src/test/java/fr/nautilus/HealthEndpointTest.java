@@ -22,6 +22,11 @@ class HealthEndpointTest {
     }
 
     @Test
+    void managementEndpointsStayOutsideApiPrefix() {
+        given().when().get("/v1/q/health").then().statusCode(404);
+    }
+
+    @Test
     void flywayAppliedMigrationsAndPostgisIsAvailable() throws Exception {
         try (var connection = dataSource.getConnection();
                 var statement = connection.createStatement();

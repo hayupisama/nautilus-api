@@ -1,6 +1,5 @@
 package fr.nautilus.architecture;
 
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 import static com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices;
 
 import com.tngtech.archunit.core.importer.ImportOption;
@@ -29,11 +28,14 @@ class HexagonalArchitectureTest {
     static final ArchRule sharedDoesNotDependOnModules = ArchRules.SHARED_INDEPENDENT_OF_MODULES;
 
     @ArchTest
-    static final ArchRule generatedContractIsOnlyUsedByRestAdapters = noClasses()
-            .that().resideOutsideOfPackages("..adapter.in.rest..", "fr.nautilus.contract..")
-            .should().dependOnClassesThat().resideInAPackage("fr.nautilus.contract..")
-            .allowEmptyShould(true)
-            .because("le contrat genere ne concerne que les adaptateurs REST");
+    static final ArchRule generatedContractIsOnlyUsedByRestAdapters = ArchRules.CONTRACT_ONLY_IN_REST_ADAPTERS;
+
+    @ArchTest
+    static final ArchRule noActiveRecord = ArchRules.NO_ACTIVE_RECORD;
+
+    @ArchTest
+    static final ArchRule persistenceConfinedToPersistenceAdapter =
+            ArchRules.PERSISTENCE_CONFINED_TO_PERSISTENCE_ADAPTER;
 
     @ArchTest
     static final ArchRule noCyclesBetweenModules = slices().matching("fr.nautilus.(*)..")

@@ -1,3 +1,8 @@
 # Fichiers de session Claude Code : générés, réservés à Claude Code, repliés dans les diffs GitHub.
 .claude/sessions/** linguist-generated=true -diff merge=union
 .claude/scrum/** linguist-generated=true
+
+# Fins de ligne stables : mvnw doit rester en LF pour Linux, le contrat est verifie par sha256.
+mvnw text eol=lf
+*.sh text eol=lf
+src/main/openapi/openapi.yaml text eol=lf

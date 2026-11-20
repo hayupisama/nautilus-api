@@ -148,6 +148,7 @@
                             <configOptions>
                                 <interfaceOnly>true</interfaceOnly>
                                 <useJakartaEe>true</useJakartaEe>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
                                 <returnResponse>false</returnResponse>
                                 <useSwaggerAnnotations>false</useSwaggerAnnotations>
                                 <dateLibrary>java8</dateLibrary>

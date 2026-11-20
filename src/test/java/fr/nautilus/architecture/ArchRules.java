@@ -21,7 +21,8 @@ final class ArchRules {
             .that().resideInAPackage("..domain..")
             .should().dependOnClassesThat().resideInAnyPackage(
                     "io.quarkus..", "jakarta..", "javax..", "org.hibernate..", "io.smallrye..",
-                    "org.eclipse.microprofile..", "com.fasterxml.jackson..", "org.jboss..", "io.vertx..")
+                    "org.eclipse.microprofile..", "com.fasterxml.jackson..", "org.jboss..", "io.vertx..",
+                    "org.locationtech..", "org.geolatte..")
             .allowEmptyShould(true)
             .because("le domaine est du Java pur");
 
@@ -45,6 +46,24 @@ final class ArchRules {
             .that().resideInAPackage("fr.nautilus.shared..")
             .should().dependOnClassesThat().resideInAnyPackage(prefix(MODULES))
             .allowEmptyShould(true);
+
+    static final ArchRule NO_ACTIVE_RECORD = noClasses()
+            .should().beAssignableTo("io.quarkus.hibernate.orm.panache.PanacheEntityBase")
+            .allowEmptyShould(true)
+            .because("pas d'active record : repositories Panache dans l'adaptateur de persistance");
+
+    static final ArchRule PERSISTENCE_CONFINED_TO_PERSISTENCE_ADAPTER = noClasses()
+            .that().resideOutsideOfPackage("..adapter.out.persistence..")
+            .should().dependOnClassesThat().resideInAnyPackage(
+                    "io.quarkus.hibernate.orm.panache..", "jakarta.persistence..")
+            .allowEmptyShould(true)
+            .because("Panache et JPA sont limites a adapter.out.persistence");
+
+    static final ArchRule CONTRACT_ONLY_IN_REST_ADAPTERS = noClasses()
+            .that().resideOutsideOfPackages("..adapter.in.rest..", "fr.nautilus.contract..")
+            .should().dependOnClassesThat().resideInAPackage("fr.nautilus.contract..")
+            .allowEmptyShould(true)
+            .because("le contrat genere ne concerne que les adaptateurs REST");
 
     private static ArchCondition<JavaClass> onlyUseOtherModulesThroughTheirApplication() {
         return new ArchCondition<>("n'appeler un autre module que via son package application") {
